@@ -1,5 +1,6 @@
 """The main purpose of this program is to make it easy for a user to order a burger and have it delivered to them"""
-from tkinter import messagebox
+#burger ordering and delivery app version 1.0.0 author Adam Stump
+from tkinter import messagebox #everything here is needed to make the program run
 from tkinter import PhotoImage
 from tkinter import *
 from breezypythongui import EasyFrame
@@ -21,14 +22,14 @@ class BODA(EasyFrame):
             self.Option_1_counter = 0
             self.Option_2_counter = 0
             self.Option_3_counter = 0
-            self.user = None
+            self.user = None #only text based input will have the None value attached to them
             self.home = None
             self.username = None
             self.credit = 0
             self.total = 0
             self.tax = 0.07
             self.creditchecker = 0
-            def Menu(): #current pricing is a place holder for now until futher devoloped 
+            def Menu(): #this must be clicked on in order to access the rest of the program
                 messagebox.showinfo(title = "Menu",message = "Option 1, double decker double pounder - $11.39, Option 2, Cheesemegedon - $11.76, Option 3, Bacons revenge - $17.91.")
                 messagebox.showwarning(title="NOTICE",message="NOTE, clicking on either option will result in said option being added to your order!!!")
                 messagebox.showinfo(title = "Canceling/removing items",message ="If you simply click on the 'number of times you order x' then it will simply reset itself back to 0")
@@ -134,7 +135,7 @@ class BODA(EasyFrame):
                 self.Mayo = 0
                 self.Mustard = 0
                 self.Ketchup = 0
-            def reset1():
+            def reset1(): #sets for each reset will as the name suggests reset the values in the program
                 self.total -= (self.Option_1_counter * 11.39)
                 self.Option_1_counter = 0
                 self.Option_1_counter_display = self.addButton(text = "Number of time you ordered option 1:" + str(self.Option_1_counter), row = 6,
@@ -158,7 +159,7 @@ class BODA(EasyFrame):
                 self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" % self.total, row = 2,
                                     column = 0)
                 self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
-            def Order():
+            def Order(): #this is to get info from the user in order to complete the order
                 self.userlabel = self.addLabel(text="enter your username here:",row=9,column=0)
                 self.user = self.addTextField(text="username here: ", row=10, column=0)
                 self.username = self.user.getText()
@@ -168,7 +169,7 @@ class BODA(EasyFrame):
                 self.credit= self.addIntegerField(value=0,row=14,column=0, width=10)
                 self.Orderingbuttonfinal["state"] = "normal"  
             def orderplaced():   
-                try:
+                try: #this is to make sure that a vaild credit card number was inputed, it does not check to see if it is an actuall number
                     self.creditchecker = (self.credit.getNumber() * 1)
                 except:
                     messagebox.showerror(title="Credit error",message="if you are seeing this then you may have inputed a letter instead of a number.")
@@ -207,7 +208,7 @@ class BODA(EasyFrame):
                                     column = 0,state="disabled")
                 self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0, state="disabled")
             self.myLabel = self.addLabel(text = "Hello Valued Customer, this app will let you order a burger and have it delivered to you",
-                                       row = 0, column = 0,
+                                       row = 0, column = 0, #all of these labels and buttons are here to give the user something to use.
                                        sticky = "NSEW",
                                        columnspan = 1)
             self.Menuoptions = self.addButton(text = "Menu", row = 1,
