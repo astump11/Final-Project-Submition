@@ -165,14 +165,16 @@ class BODA(EasyFrame):
                 self.homelabel = self.addLabel(text="enter your home address here:",row=11,column=0)
                 self.home = self.addTextField(text="home address here: ",row=12,column=0)
                 self.creditlabel = self.addLabel(text="enter your credit card here",row=13,column=0)
-                self.credit = self.addIntegerField(value=0,row=14,column=0, width=10)
-                self.Orderingbuttonfinal["state"] = "normal"
+                self.credit= self.addIntegerField(value=0,row=14,column=0, width=10)
+                self.Orderingbuttonfinal["state"] = "normal"  
+            def orderplaced():   
                 try:
-                    self.creditchecker = self.credit.getNumber() * 1
+                    self.creditchecker = (self.credit.getNumber() * 1)
                 except:
                     messagebox.showerror(title="Credit error",message="if you are seeing this then you may have inputed a letter instead of a number.")
-                    self.Orderingbuttonfinal["state"] = "disabled"   
-            def orderplaced():   
+                    self.Orderingbuttonfinal["state"] = "disabled"
+                    while self.creditchecker != (self.credit.getNumber() * 1) :
+                        break
                 messagebox.showinfo(title="Order placed!",message="Your order has been placed!, And it will be delivered soon!")
                 messagebox.showinfo(title="Thank you for ordering",message="Thank for ordering " + self.username)
                 messagebox.showinfo(title="Final price",message="Your final total for the order is $%.2f" %(self.total + (self.total * self.tax)))
@@ -201,9 +203,9 @@ class BODA(EasyFrame):
                 self.Option_3_counter = 0
                 self.Option_3_counter_display = self.addButton(text = "Number of time you ordered option 3:" + str(self.Option_1_counter), row = 8,
                                     column = 0,state="disabled")
-                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" %str(self.total), row = 2,
+                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" % self.total, row = 2,
                                     column = 0,state="disabled")
-                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
+                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0, state="disabled")
             self.myLabel = self.addLabel(text = "Hello Valued Customer, this app will let you order a burger and have it delivered to you",
                                        row = 0, column = 0,
                                        sticky = "NSEW",
