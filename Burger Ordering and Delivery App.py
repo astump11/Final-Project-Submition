@@ -1,7 +1,9 @@
 """The main purpose of this program is to make it easy for a user to order a burger and have it delivered to them"""
 from tkinter import messagebox
+from tkinter import PhotoImage
 from tkinter import *
 from breezypythongui import EasyFrame
+from breezypythongui import *
 class BODA(EasyFrame):
         def __init__(self):
             EasyFrame.__init__(self, title = "Burger Ordering and Delivery App")
@@ -19,21 +21,29 @@ class BODA(EasyFrame):
             self.Option_1_counter = 0
             self.Option_2_counter = 0
             self.Option_3_counter = 0
+            self.user = None
+            self.home = None
+            self.username = None
+            self.credit = 0
             self.total = 0
+            self.tax = 0.07
+            self.creditchecker = 0
             def Menu(): #current pricing is a place holder for now until futher devoloped 
-                messagebox.showinfo(title = "Menu",message = "Option 1, double decker double pounder - 11.39$, Option 2, Cheesemegedon - 11.76$, Option 3, Bacons revenge - 17.91$, Option 4, Build Your Own, prices may differ upon creation.")
-                messagebox.showwarning(title="NOTICE",message="NOTE, cliking on ethier option will result in said option being added to your order!!!")
+                messagebox.showinfo(title = "Menu",message = "Option 1, double decker double pounder - $11.39, Option 2, Cheesemegedon - $11.76, Option 3, Bacons revenge - $17.91.")
+                messagebox.showwarning(title="NOTICE",message="NOTE, clicking on either option will result in said option being added to your order!!!")
+                messagebox.showinfo(title = "Canceling/removing items",message ="If you simply click on the 'number of times you order x' then it will simply reset itself back to 0")
                 self.Option_1["state"] = "normal"
                 self.Option_1_display["state"] = "normal"
                 self.Option_2["state"] = "normal"
                 self.Option_2_display["state"] = "normal"
                 self.Option_3["state"] = "normal"
                 self.Option_3_display["state"] = "normal"
-                self.Option_BYO["state"] = "normal"
                 self.Pricebeforetax["state"] = "normal"
                 self.Option_1_counter_display["state"] = "normal"
                 self.Option_2_counter_display["state"] = "normal"
                 self.Option_3_counter_display["state"] = "normal"
+                self.Taxwithoutprice["state"] = "normal"
+                self.Orderingbutton["state"] = "normal"
             def Menu_option_1():
                 self.Buns += 1 
                 self.Burger += 2
@@ -47,11 +57,12 @@ class BODA(EasyFrame):
                 self.Mustard += 1
                 self.Ketchup += 1
                 self.Option_1_counter += 1
-                self.Option_1_counter_display = self.addButton(text = "Number of time you ordered option 1:" + str(self.Option_1_counter), row = 3,
-                                    column = 0)
+                self.Option_1_counter_display = self.addButton(text = "Number of time you ordered option 1:" + str(self.Option_1_counter), row = 6,
+                                    column = 0, command=reset1)
                 self.total += (self.Buns * 0.22) + (self.Burger * 4.26) + ( self.Lettuce * 0.04) + (self.Cheese * 0.29) + (self.Onion * 0.1) + (self.Pickle * 0.1) + (self.Totmato * 0.03) + (self.Bacon * 0.29) + (self.Mayo * 0.25) + (self.Mustard * 0.25) + ( self.Ketchup * 0.25)
-                self.Pricebeforetax = self.addButton(text = "Current price before tax " + str(self.total), row = 2,
+                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" % self.total, row = 2,
                                     column = 0)
+                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
                 self.Buns = 0 
                 self.Burger = 0 
                 self.Lettuce = 0 
@@ -76,11 +87,12 @@ class BODA(EasyFrame):
                 self.Mustard += 1
                 self.Ketchup += 1
                 self.Option_2_counter += 1
-                self.Option_2_counter_display = self.addButton(text = "Number of time you ordered option 2:" + str(self.Option_2_counter), row = 4,
-                                    column = 0)
+                self.Option_2_counter_display = self.addButton(text = "Number of time you ordered option 2:" + str(self.Option_2_counter), row = 7,
+                                    column = 0, command=reset2)
                 self.total += (self.Buns * 0.22) + (self.Burger * 4.26) + ( self.Lettuce * 0.04) + (self.Cheese * 0.29) + (self.Onion * 0.1) + (self.Pickle * 0.1) + (self.Totmato * 0.03) + (self.Bacon * 0.29) + (self.Mayo * 0.25) + (self.Mustard * 0.25) + ( self.Ketchup * 0.25)
-                self.Pricebeforetax = self.addButton(text = "Current price before tax " + str(self.total), row = 2,
+                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" % self.total, row = 2,
                                     column = 0)
+                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
                 self.Buns = 0 
                 self.Burger = 0 
                 self.Lettuce = 0 
@@ -105,11 +117,12 @@ class BODA(EasyFrame):
                 self.Mustard += 1
                 self.Ketchup += 1
                 self.Option_3_counter += 1
-                self.Option_3_counter_display = self.addButton(text = "Number of time you ordered option 3:" + str(self.Option_3_counter), row = 5,
-                                    column = 0)
+                self.Option_3_counter_display = self.addButton(text = "Number of time you ordered option 3:" + str(self.Option_3_counter), row = 8,
+                                    column = 0, command=reset3)
                 self.total += (self.Buns * 0.22) + (self.Burger * 4.26) + ( self.Lettuce * 0.04) + (self.Cheese * 0.29) + (self.Onion * 0.1) + (self.Pickle * 0.1) + (self.Totmato * 0.03) + (self.Bacon * 0.29) + (self.Mayo * 0.25) + (self.Mustard * 0.25) + ( self.Ketchup * 0.25)
-                self.Pricebeforetax = self.addButton(text = "Current price before tax " + str(self.total), row = 2,
+                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" % self.total, row = 2,
                                     column = 0)
+                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
                 self.Buns = 0 
                 self.Burger = 0 
                 self.Lettuce = 0 
@@ -121,37 +134,76 @@ class BODA(EasyFrame):
                 self.Mayo = 0
                 self.Mustard = 0
                 self.Ketchup = 0
-            def Menu_option_BYO ():
-                self.myLabel = self.addLabel(text = "Hello Valued Customer, welcome to the build our own section of the appplease enter into the following fields for what you want for your burger",
-                                       row = 5, column = 5,
-                                       sticky = "NSEW",
-                                       columnspan = 11)
-                self.Buns = self.addFloatField(value = 0,row = 1, column = 8)
-                self.Burger = self.addFloatField(value = 0,row = 2, column = 8)
-                self.Lettuce = self.addFloatField(value = 0,row = 3, column = 8) 
-                self.Cheese = self.addFloatField(value = 0,row = 4, column = 8)
-                self.Onion = self.addFloatField(value = 0,row = 5, column = 8) 
-                self.Pickle = self.addFloatField(value = 0,row = 6, column = 8)
-                self.Totmato = self.addFloatField(value = 0,row = 7, column =8)
-                self.Bacon = self.addFloatField(value = 0,row = 8, column = 8)
-                self.Mayo = self.addFloatField(value = 0,row = 9, column = 8)
-                self.Mustard = self.addFloatField(value = 0,row = 10, column = 8)
-                self.Ketchup = self.addFloatField(value = 0,row = 11, column = 8)
-                messagebox.showinfo(title = "!!!Note!!!",message = "The current version of this app does not keep indiviudul track of build your own burger orders, if you order more than one then some assemble will be required")
-                self.total += (self.Buns * 0.22) + (self.Burger * 4.26) + ( self.Lettuce * 0.04) + (self.Cheese * 0.29) + (self.Onion * 0.1) + (self.Pickle * 0.1) + (self.Totmato * 0.03) + (self.Bacon * 0.29) + (self.Mayo * 0.25) + (self.Mustard * 0.25) + ( self.Ketchup * 0.25)
-                self.Pricebeforetax = self.addButton(text = "Current price before tax " + str(self.total), row = 2,
+            def reset1():
+                self.total -= (self.Option_1_counter * 11.39)
+                self.Option_1_counter = 0
+                self.Option_1_counter_display = self.addButton(text = "Number of time you ordered option 1:" + str(self.Option_1_counter), row = 6,
                                     column = 0)
-                self.Buns = 0 
-                self.Burger = 0 
-                self.Lettuce = 0 
-                self.Cheese = 0
-                self.Onion = 0 
-                self.Pickle = 0
-                self.Totmato = 0
-                self.Bacon = 0
-                self.Mayo = 0
-                self.Mustard = 0
-                self.Ketchup = 0
+                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" % self.total, row = 2,
+                                    column = 0)
+                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
+            def reset2():
+                self.total -= (self.Option_2_counter * 11.76)
+                self.Option_2_counter = 0
+                self.Option_2_counter_display = self.addButton(text = "Number of time you ordered option 2:" + str(self.Option_2_counter), row = 7,
+                                    column = 0)
+                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" % self.total, row = 2,
+                                    column = 0)
+                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
+            def reset3():
+                self.total -= (self.Option_3_counter * 11.39)
+                self.Option_3_counter = 0
+                self.Option_3_counter_display = self.addButton(text = "Number of time you ordered option 3:" + str(self.Option_1_counter), row = 8,
+                                    column = 0)
+                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" % self.total, row = 2,
+                                    column = 0)
+                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
+            def Order():
+                self.userlabel = self.addLabel(text="enter your username here:",row=9,column=0)
+                self.user = self.addTextField(text="username here: ", row=10, column=0)
+                self.username = self.user.getText()
+                self.homelabel = self.addLabel(text="enter your home address here:",row=11,column=0)
+                self.home = self.addTextField(text="home address here: ",row=12,column=0)
+                self.creditlabel = self.addLabel(text="enter your credit card here",row=13,column=0)
+                self.credit = self.addIntegerField(value=0,row=14,column=0, width=10)
+                self.Orderingbuttonfinal["state"] = "normal"
+                try:
+                    self.creditchecker = self.credit.getNumber() * 1
+                except:
+                    messagebox.showerror(title="Credit error",message="if you are seeing this then you may have inputed a letter instead of a number.")
+                    self.Orderingbuttonfinal["state"] = "disabled"   
+            def orderplaced():   
+                messagebox.showinfo(title="Order placed!",message="Your order has been placed!, And it will be delivered soon!")
+                messagebox.showinfo(title="Thank you for ordering",message="Thank for ordering " + self.username)
+                messagebox.showinfo(title="Final price",message="Your final total for the order is $%.2f" %(self.total + (self.total * self.tax)))
+                self.Option_1["state"] = "disabled" #big ol reset of the program
+                self.Option_1_display["state"] = "disabled"
+                self.Option_2["state"] = "disabled"
+                self.Option_2_display["state"] = "disabled"
+                self.Option_3["state"] = "disabled"
+                self.Option_3_display["state"] = "disabled"
+                self.Pricebeforetax["state"] = "disabled"
+                self.Option_1_counter_display["state"] = "disabled"
+                self.Option_2_counter_display["state"] = "disabled"
+                self.Option_3_counter_display["state"] = "disabled"
+                self.Taxwithoutprice["state"] = "disabled"
+                self.Orderingbutton["state"] = "disabled"
+                self.Orderingbuttonfinal["state"] = "disabled"
+                self.total -= (self.Option_1_counter * 11.39)
+                self.Option_1_counter = 0
+                self.Option_1_counter_display = self.addButton(text = "Number of time you ordered option 1:" + str(self.Option_1_counter), row = 6,
+                                    column = 0,state="disabled")
+                self.total -= (self.Option_2_counter * 11.39)
+                self.Option_2_counter = 0
+                self.Option_2_counter_display = self.addButton(text = "Number of time you ordered option 2:" + str(self.Option_2_counter), row = 7,
+                                    column = 0,state="disabled")
+                self.total -= (self.Option_3_counter * 11.39)
+                self.Option_3_counter = 0
+                self.Option_3_counter_display = self.addButton(text = "Number of time you ordered option 3:" + str(self.Option_1_counter), row = 8,
+                                    column = 0,state="disabled")
+                self.Pricebeforetax = self.addButton(text = "Current price before tax %.2f" %str(self.total), row = 2,
+                                    column = 0,state="disabled")
+                self.Taxwithoutprice = self.addButton(text = "Current Tax %.2f" %(self.total * self.tax), row = 3, column = 0)
             self.myLabel = self.addLabel(text = "Hello Valued Customer, this app will let you order a burger and have it delivered to you",
                                        row = 0, column = 0,
                                        sticky = "NSEW",
@@ -160,26 +212,39 @@ class BODA(EasyFrame):
                                     column = 0, command = Menu)
             self.Pricebeforetax = self.addButton(text = "Current price before tax " + str(self.total), row = 2,
                                     column = 0,state= "disabled")
-            self.Option_1_counter_display = self.addButton(text = "Number of time you ordered option 1:" + str(self.Option_1_counter), row = 3,
+            self.Taxwithoutprice = self.addButton(text = "Current Tax " + str(self.total * self.tax), row = 3,
                                     column = 0,state= "disabled")
-            self.Option_2_counter_display = self.addButton(text = "Number of time you ordered option 2:" + str(self.Option_2_counter), row = 4,
+            self.Orderingbutton = self.addButton(text = "Place your order", row = 4,
+                                    column = 0,state= "disabled", command=Order)
+            self.Orderingbuttonfinal = self.addButton(text = "Confirm order", row = 5,
+                                    column = 0,state= "disabled", command=orderplaced)                                                
+            self.Option_1_counter_display = self.addButton(text = "Number of time you ordered option 1:" + str(self.Option_1_counter), row = 6,
                                     column = 0,state= "disabled")
-            self.Option_3_counter_display = self.addButton(text = "Number of time you ordered option 3:" + str(self.Option_3_counter), row = 5,
+            self.Option_2_counter_display = self.addButton(text = "Number of time you ordered option 2:" + str(self.Option_2_counter), row = 7,
+                                    column = 0,state= "disabled")
+            self.Option_3_counter_display = self.addButton(text = "Number of time you ordered option 3:" + str(self.Option_3_counter), row = 8,
                                     column = 0,state= "disabled")                        
             self.Option_1 = self.addButton(text = "Option 1", row = 1,
                                     column = 1, command = Menu_option_1, state= "disabled")
             self.Option_1_display = self.addButton(text = "Double Decker Double Pounder 11.39$", row = 2,
                                     column = 1, command = Menu_option_1, state= "disabled")
+            self.imageLabel1 = self.addLabel (text="",row=3,column=1)
+            self.Option1imange = PhotoImage(file="Option1gif.gif")
+            self.imageLabel1["image"] = self.Option1imange
             self.Option_2 = self.addButton(text = "Option 2", row = 1,
                                     column = 2, command = Menu_option_2, state="disabled")
             self.Option_2_display = self.addButton(text = "Cheesemegedon - 11.76$", row = 2,
-                                    column = 2, command = Menu_option_2, state="disabled")                    
+                                    column = 2, command = Menu_option_2, state="disabled")
+            self.imageLabel2 = self.addLabel (text="",row=3,column=2)
+            self.Option2image = PhotoImage(file="Option2gif.gif")
+            self.imageLabel2["image"] = self.Option2image                    
             self.Option_3 = self.addButton(text = "Option 3", row = 1,
                                     column = 3, command = Menu_option_3, state= "disabled")
             self.Option_3_display = self.addButton(text = "Bacons revenge - 17.91$", row = 2,
                                     column = 3, command = Menu_option_3, state= "disabled")
-            self.Option_BYO = self.addButton(text = "Option Build your own", row = 1,
-                                    column = 4, command = Menu_option_BYO, state= "disabled")
+            self.imageLabel3 = self.addLabel (text="",row=3,column=3)
+            self.Option3image = PhotoImage(file="Option3gif.gif")
+            self.imageLabel3["image"] = self.Option3image
 def main(): #actually runs the GUI
     BODA().mainloop()
 if __name__ == "__main__":
